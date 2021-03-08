@@ -25,7 +25,9 @@
 
 void getData(int *, int *, int *, int *, int *, int *);
 void displayData(int, int, int, int, int, int);
+void displayRating(double);
 double computeRating(int, int, int, int, int, int);
+char* pluralize(int, char*, char*);
 
 int
 main(int argc, char **argv)
@@ -44,7 +46,7 @@ main(int argc, char **argv)
     displayData(goals, shots, corners, assists, passes, touches);
 
     //display the results
-    printf("\nFor these statistics, the offensive production ratiing is %f\n", rating);
+    displayRating(rating);
 
     return 0;
     }
@@ -80,15 +82,26 @@ computeRating(int goals, int shots, int corners, int assists, int passes, int to
     return numerator / (double) touches;
     }
 
+char*
+pluralize(int count, char* singleForm, char* pluralForm)
+    {
+        return (count == 1) ? singleForm : pluralForm;
+    }
+
 void
 displayData(int goals, int shots, int corners, int assists, int passes, int touches)
     {
     printf("\n");
-    printf("goals: %d\n", goals);
-    printf("shots: %d\n", shots);
-    printf("corners: %d\n", corners);
-    printf("assists: %d\n", assists);
-    printf("passes: %d\n", passes);
-    printf("touches: %d\n", touches);
+    printf("%d %s\n", goals, pluralize(goals, "goal", "goals"));
+    printf("%d %s\n", shots, pluralize(shots, "shot", "shots"));
+    printf("%d %s\n", corners, pluralize(corners, "corner", "corners"));
+    printf("%d %s\n", assists, pluralize(assists, "assist", "assists"));
+    printf("%d %s\n", passes, pluralize(passes, "pass", "passes"));
+    printf("%d %s\n", touches, pluralize(touches, "touch", "touches"));
     return;
+    }
+
+void displayRating(double rating)
+    {
+    printf("\nFor these statistics, the offensive production ratiing is %+.3f\n", rating);
     }
